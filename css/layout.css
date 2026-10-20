@@ -1,0 +1,345 @@
+/* ==========================================================================
+   layout.css
+   Estructura de la página: Flexbox (alineaciones 1D) + CSS Grid (esquemas 2D)
+   Estrategia MOBILE-FIRST:
+     · Estilos base ............. móvil     (< 768px)
+     · min-width: 768px ......... tablet    (768px – 1024px)
+     · min-width: 1025px ........ escritorio (> 1024px)
+   ========================================================================== */
+
+:root {
+    --container: 1200px;
+    --gutter: 1.25rem;
+}
+
+
+/* ---------- Contenedores de sección ---------- */
+
+.seccion {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 4rem var(--gutter);
+}
+
+/* Fondo a sangre completa, pero el contenido sigue alineado al contenedor */
+.seccion--alt {
+    max-width: none;
+    background: var(--bg-alt);
+    padding-inline: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+}
+
+/* Secciones con título + dos columnas (Grid) */
+.seccion--dos-col {
+    display: grid;
+    gap: var(--space-lg);
+}
+
+.titulo-seccion {
+    display: flex;                 /* Flexbox: número + título en una fila */
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.seccion--dos-col > .titulo-seccion {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Header (Flexbox) ---------- */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--gutter);
+}
+
+.logo {
+    margin-right: auto;
+}
+
+.tema-btn {
+    order: 1;
+}
+
+.menu-btn {
+    order: 2;
+}
+
+/* Menú colapsable: cerrado por defecto en móvil y tablet */
+.nav {
+    order: 3;
+    flex-basis: 100%;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height var(--transition), visibility var(--transition);
+}
+
+.nav--abierto {
+    max-height: 32rem;
+    visibility: visible;
+}
+
+.nav-lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-block: var(--space-sm);
+}
+
+
+/* ---------- Hero (Grid) ---------- */
+
+.hero {
+    display: grid;
+    align-items: center;
+    gap: var(--space-xl);
+    max-width: var(--container);
+    min-height: 90vh;
+    margin-inline: auto;
+    padding: 4rem var(--gutter);
+}
+
+.hero-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+
+/* ---------- Perfil ---------- */
+
+.datos-personales dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+
+/* ---------- Experiencia ---------- */
+
+.timeline {
+    display: grid;
+    gap: var(--space-md);
+}
+
+.experiencia-card {
+    display: grid;
+    gap: var(--space-xs);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+
+/* ---------- Habilidades ---------- */
+
+.habilidades-controles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.habilidades-grid,
+.repos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+}
+
+
+/* ---------- GitHub ---------- */
+
+.github-perfil {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.github-perfil-datos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.repo-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+    margin-top: auto;
+}
+
+
+/* ---------- Educación ---------- */
+
+.educacion-grid {
+    display: grid;
+    gap: var(--space-md);
+}
+
+
+/* ---------- Contacto ---------- */
+
+.contacto-dato {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+
+/* ---------- Footer (Flexbox) ---------- */
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: var(--space-lg) var(--gutter);
+}
+
+
+/* ==========================================================================
+   TABLET: 768px – 1024px  (también aplica a escritorio salvo que se sobrescriba)
+   ========================================================================== */
+
+@media (min-width: 768px) {
+
+    :root {
+        --gutter: 2.5rem;
+    }
+
+    .seccion {
+        padding-block: 5.5rem;
+    }
+
+    .hero {
+        grid-template-columns: 1.2fr 0.8fr;
+        padding-block: 5.5rem;
+    }
+
+    .seccion--dos-col {
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: start;
+        column-gap: var(--space-xl);
+    }
+
+    .seccion--dos-col > .titulo-seccion {
+        grid-column: 1 / -1;
+    }
+
+    .seccion--contacto {
+        grid-template-columns: 0.8fr 1.2fr;
+    }
+
+    .experiencia-card {
+        grid-template-columns: 110px 1fr;
+        column-gap: var(--space-lg);
+    }
+
+    .experiencia-fecha {
+        grid-row: 1 / span 4;
+    }
+
+    .experiencia-card > :not(.experiencia-fecha) {
+        grid-column: 2;
+    }
+
+    .habilidades-controles {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .habilidades-grid,
+    .repos-grid,
+    .educacion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+/* Solo tablet: el menú desplegado se muestra en cuadrícula de dos columnas */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .nav-lista {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* ==========================================================================
+   ESCRITORIO: > 1024px
+   ========================================================================== */
+
+@media (min-width: 1025px) {
+
+    :root {
+        --gutter: 3.75rem;
+    }
+
+    .header {
+        flex-wrap: nowrap;
+    }
+
+    /* La navegación queda siempre visible y en línea */
+    .nav {
+        order: 1;
+        flex-basis: auto;
+        max-height: none;
+        overflow: visible;
+        visibility: visible;
+    }
+
+    .nav-lista {
+        flex-direction: row;
+        gap: var(--space-md);
+        padding-block: 0;
+    }
+
+    .tema-btn {
+        order: 2;
+    }
+
+    .header .menu-btn {
+        display: none;
+    }
+
+    .hero {
+        padding-block: 7rem;
+    }
+
+    .habilidades-grid,
+    .repos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
